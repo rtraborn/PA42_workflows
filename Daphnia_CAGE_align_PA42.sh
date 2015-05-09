@@ -4,7 +4,7 @@
 #PBS -k o
 #PBS -q cpu
 #PBS -l nodes=1:ppn=8,vmem=500gb
-#PBS -l walltime=48:00:00
+#PBS -l walltime=30:00:00
 #PBS -q shared
 #BS -m abe
 #PBS -M rtraborn@indiana.edu
