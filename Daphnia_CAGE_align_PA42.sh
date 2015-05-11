@@ -28,9 +28,9 @@ echo "Aligning the reads"
 for FQ in *.fastq
 do
 bwa aln -t8 -B 3 -n 3 $GENOME -f $(basename $FQ .fastq).sai $FQ
-bwa samse $GENOME $(basename $FQ .fastq).sai $FQ
+bwa samse $GENOME $(basename -s $FQ .fastq).sai $FQ
     samtools view -uS - |
-    samtools sort - $(basename $FQ .fastq)
+    samtools sort - $(basename -s $FQ .fastq)
 done
 
 echo "Job Complete!"
