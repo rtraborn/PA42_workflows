@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#PBS -N RTR_PA42_CAGE_align
+#PBS -N CAGE_align_PA42
 #PBS -k o
 #PBS -q cpu
-#PBS -l nodes=1:ppn=8,vmem=500gb
-#PBS -l walltime=36:00:00
+#PBS -l nodes=1:ppn=8,vmem=100gb
+#PBS -l walltime=18:00:00
 #PBS -q shared
 #BS -m abe
 #PBS -M rtraborn@indiana.edu
@@ -14,24 +14,21 @@ ulimit -s unlimited
 module load bwa/0.6.2
 module load samtools
 
-WD=/N/dc2/projects/Daphnia_Gene_Expression/CAGE_data/demultiplexed/
 GENOME=PA42_scaffold_1.0.fasta
+WD=/N/u/rtraborn/Mason/scratch/Daphnia/CAGE_data/
 
 cd $WD
 
-echo "Indexing Genome"
-
-bwa index $GENOME
-
-echo "Aligning the reads"
+echo "Aligning the CAGE reads to PA42"
 
 for FQ in *.fastq
 do
 bwa aln -t8 -B 3 -n 3 $GENOME -f $(basename $FQ .fastq).sai $FQ
-bwa samse $GENOME $(basename -s $FQ .fastq).sai $FQ
-    samtools view -uS - |
-    samtools sort - $(basename -s $FQ .fastq)
+bwa samse $GENOME $(basename $FQ .fastq).sai $FQ |
+    samtools view -ub - |
+    samtools sort - $(basename $FQ .fastq) && samtools index $(basename $FQ .fastq).bam	
 done
 
-echo "Job Complete!"
+echo "Alignment Complete"
 
+echo "Job Complete!"
