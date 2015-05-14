@@ -3,7 +3,7 @@
 #PBS -N CAGE_align_PA42
 #PBS -k o
 #PBS -q cpu
-#PBS -l nodes=1:ppn=8,vmem=100gb
+#PBS -l nodes=1:ppn=16,vmem=200gb
 #PBS -l walltime=18:00:00
 #PBS -q shared
 #BS -m abe
@@ -23,7 +23,7 @@ echo "Aligning the CAGE reads to PA42"
 
 for FQ in *.fastq
 do
-bwa aln -t8 -B 3 -n 3 $GENOME -f $(basename $FQ .fastq).sai $FQ
+bwa aln -t16 -B 3 -n 3 $GENOME -f $(basename $FQ .fastq).sai $FQ
 bwa samse $GENOME $(basename $FQ .fastq).sai $FQ |
     samtools view -ub - |
     samtools sort - $(basename $FQ .fastq) && samtools index $(basename $FQ .fastq).bam	
