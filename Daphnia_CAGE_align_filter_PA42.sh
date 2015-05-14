@@ -17,6 +17,7 @@ module load java
 
 GENOME=PA42_scaffold_1.0.fasta
 WD=/N/u/rtraborn/Mason/scratch/Daphnia/CAGE_data/
+rRNA=/home/rtraborn/Daphnia/annotation_files/Daphnia_rDNA.fasta
 
 cd $WD
 
@@ -31,5 +32,15 @@ bwa samse $GENOME $(basename $FQ .fastq).sai $FQ |
 done
 
 echo "Alignment Complete"
+
+echo "Filtering rRNA reads"
+
+for BM in *.bam
+do
+echo $BM rRNAdust
+  (rRNAdust -t16 $rRNA $BM -e 3 | samtools view -bS - 2> /dev/null | sponge $(basename $BM .bam).filtered.bam) 2>&1 | sed 's/Excluded: //'
+  done | tee complete_rRNA_stats.log
+
+echo "rRNA filtering complete"
 
 echo "Job Complete!"
