@@ -16,7 +16,7 @@ module load samtools
 module load java
 
 GENOME=/N/u/rtraborn/Mason/PA42_Workflows/PA42_scaffold2.0.fasta
-WD=/N/u/rtraborn/Mason/scratch/Daphnia/CAGE_data/
+WD=/N/u/rtraborn/Mason/scratch/Daphnia/CAGE_data/fastq
 
 echo "Indexing the PA42v2.0 assembly"
 

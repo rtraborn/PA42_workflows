@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -N CAGE_align_PA42
+#PBS -N CAGE_align_PA42_Filter
 #PBS -k o
 #PBS -q cpu
 #PBS -l nodes=1:ppn=16,vmem=200gb
@@ -15,9 +15,9 @@ module load bwa/0.6.2
 module load samtools
 module load java
 
-GENOME=PA42_scaffold_1.0.fasta
-WD=/N/u/rtraborn/Mason/scratch/Daphnia/CAGE_data/
-rRNA=/home/rtraborn/Daphnia/annotation_files/Daphnia_rDNA.fasta
+GENOME=/N/u/rtraborn/Mason/PA42_Workflows/PA42_scaffold2.0.fasta
+WD=/N/u/rtraborn/Mason/scratch/Daphnia/CAGE_data/fastq
+rRNA=/N/u/rtraborn/Mason/scratch/Daphnia/rRNA_seqs/Daphnia_rRNA.fasta 
 
 cd $WD
 
@@ -28,7 +28,7 @@ do
 bwa aln -t16 -B 3 -n 3 $GENOME -f $(basename $FQ .fastq).sai $FQ
 bwa samse $GENOME $(basename $FQ .fastq).sai $FQ |
     samtools view -uS - |
-    samtools sort - $(basename $FQ .fastq) && samtools index $(basename $FQ .fastq).bam	
+    samtools sort - $(basename $FQ .fastq) && samtools index $(basename $FQ .fastq)	
 done
 
 echo "Alignment Complete"
