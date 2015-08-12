@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#PBS -N CAGE_align_PA42_Filter
+#PBS -N CAGE_align_PA42v2_rRNA_filter
 #PBS -k o
 #PBS -q cpu
 #PBS -l nodes=1:ppn=16,vmem=200gb
@@ -15,9 +15,9 @@ module load bwa/0.6.2
 module load samtools
 module load java
 
-GENOME=/N/u/rtraborn/Mason/PA42_Workflows/PA42_scaffold2.0.fasta
+GENOME=/N/u/rtraborn/Mason/scratch/Daphnia/PA42_scaffold2.0.fasta
 WD=/N/u/rtraborn/Mason/scratch/Daphnia/CAGE_data/fastq
-rRNA=/N/u/rtraborn/Mason/scratch/Daphnia/rRNA_seqs/Daphnia_rRNA.fasta 
+rRNA=/N/u/rtraborn/Mason/scratch/Daphnia/rRNA/Daphnia_rDNA.fasta
 
 cd $WD
 
